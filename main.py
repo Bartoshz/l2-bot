@@ -1,11 +1,12 @@
 import logging
 import requests
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from datetime import datetime
+import os
 
-BOT_TOKEN = "8069640766:AAG5pj5XwjVnM8e-vstCYBXS-_GQd0g8KD0"
-API_KEY = "e88d1bf1bedc69613ec3dce7cd92e684"
+BOT_TOKEN = os.environ['BOT_TOKEN']
+API_KEY = os.environ['API_KEY']
 
 HEADERS = {
     "x-rapidapi-host": "v3.football.api-sports.io",
@@ -98,7 +99,7 @@ async def buscar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🔎 Buscando jogos com valor real usando dados oficiais...")
     jogos = analisar_estrategia()
     if not jogos:
-        await update.message.reply_text("Nenhum jogo encontrado hoje!")
+        await update.message.reply_text("Nenhum jogo com valor encontrado hoje.")
         return
 
     msg = "📊 Jogos com valor hoje:\n\n"
